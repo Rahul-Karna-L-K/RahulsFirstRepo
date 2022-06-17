@@ -6,8 +6,18 @@ import urllib.request
 from PIL import Image
 
 
-i = int(2633)
-base_url="https://xkcd.com/{}/"
+
+base_url="https://xkcd.com/"
+
+result = requests.get(base_url)
+soup = bs4.BeautifulSoup(result.text,"lxml")
+numb = soup.select('a')
+numbe = numb[27].getText()
+present_num = numbe[17:21]
+print(f'The total number of comic strips present in the website currently is: {present_num}')
+
+i = int(present_num)
+
 while(i):
         print(f'processing {i}')
         result = requests.get(base_url.format(i))
@@ -30,4 +40,4 @@ while(i):
                     pic = Image.open(f'{img_name}.jpg')
                 else:
                     continue
-        i=i-1              
+        i=i-1          
